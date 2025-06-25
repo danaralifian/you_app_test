@@ -1,54 +1,46 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:you_app/screens/login.dart';
 import 'package:you_app/utils/alert.dart';
 import 'package:you_app/widgets/button.dart';
 import 'package:you_app/widgets/text_form_field.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginFragment extends StatefulWidget {
+  final VoidCallback onSwitch;
+  const LoginFragment({super.key, required this.onSwitch});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginFragment> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _emailController = TextEditingController();
-  final _usernameController = TextEditingController();
+class _LoginScreenState extends State<LoginFragment> {
+  final _emailOrUsernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   bool _isFormFilled = false;
 
   @override
   void initState() {
     super.initState();
-    _emailController.addListener(_updateFormFilled);
-    _usernameController.addListener(_updateFormFilled);
+    _emailOrUsernameController.addListener(_updateFormFilled);
     _passwordController.addListener(_updateFormFilled);
-    _confirmPasswordController.addListener(_updateFormFilled);
   }
 
   void _updateFormFilled() {
     setState(() {
       _isFormFilled =
-          _emailController.text.isNotEmpty &&
-          _usernameController.text.isNotEmpty &&
-          _passwordController.text.isNotEmpty &&
-          _confirmPasswordController.text.isNotEmpty;
+          _emailOrUsernameController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty;
     });
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _usernameController.dispose();
+    _emailOrUsernameController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void _register() {
+  void _login() {
     debugPrint("test click");
     showAlert(context, 'message');
   }
@@ -99,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Register',
+                    'Login',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -108,30 +100,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 30),
                   InputTextField(
-                    hintText: 'Enter Email',
-                    controller: _emailController,
+                    hintText: 'Enter Username/Email',
+                    controller: _emailOrUsernameController,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 0),
                   InputTextField(
-                    hintText: 'Create Username',
-                    controller: _usernameController,
-                  ),
-                  const SizedBox(height: 20),
-                  InputTextField(
-                    hintText: 'Create Password',
+                    hintText: 'Enter Password',
                     isPassword: true,
                     controller: _passwordController,
                   ),
-                  const SizedBox(height: 20),
-                  InputTextField(
-                    hintText: 'Confirm Password',
-                    isPassword: true,
-                    controller: _confirmPasswordController,
-                  ),
                   const SizedBox(height: 40),
                   Button(
-                    text: 'Register',
-                    onPressed: _isFormFilled ? _register : null,
+                    text: 'Login',
+                    onPressed: _isFormFilled ? _login : null,
                   ),
                   const SizedBox(height: 30),
                   Center(
@@ -142,21 +123,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontSize: 16,
                         ),
                         children: [
-                          const TextSpan(text: 'Have an account? '),
+                          const TextSpan(text: 'No account? '),
                           TextSpan(
-                            text: 'Login here',
+                            text: 'Register here',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               decoration: TextDecoration.underline,
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
+                                widget.onSwitch();
                               },
                           ),
                         ],

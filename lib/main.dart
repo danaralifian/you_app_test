@@ -1,6 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:you_app/screens/register.dart';
+import 'package:you_app/screens/auth_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const RegisterScreen(),
+      home: const AuthScreen(),
     );
   }
 }
