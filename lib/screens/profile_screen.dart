@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // ← Back Text
+                // Back button
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Row(
