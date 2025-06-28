@@ -6,4 +6,7 @@ class AppColors {
 
   static const Color backgroundProfilePictureCard = Color(0xFF162329);
   static const cardInfoDark = Color(0xFF182D36);
+
+  static const inputFill = Color.fromRGBO(255, 255, 255, 0.06);
+  static const borderColor = Color.fromRGBO(255, 255, 255, 0.2);
 }

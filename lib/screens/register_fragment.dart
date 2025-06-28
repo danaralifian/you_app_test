@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:you_app/utils/alert.dart';
 import 'package:you_app/widgets/button.dart';
-import 'package:you_app/widgets/text_form_field.dart';
+import 'package:you_app/widgets/input_text_field.dart';
 
 class RegisterFragment extends StatefulWidget {
   final VoidCallback onSwitch;
