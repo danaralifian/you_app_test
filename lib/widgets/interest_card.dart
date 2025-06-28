@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:you_app/screens/interest_screen.dart';
 
 class InterestCard extends StatefulWidget {
   const InterestCard({super.key});
@@ -38,7 +39,12 @@ class _InterestCardState extends State<InterestCard> {
                 ),
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.white, size: 20),
-                  onPressed: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => InterestScreen()),
+                    );
+                  },
                 ),
               ],
             ),
