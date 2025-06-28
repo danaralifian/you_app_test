@@ -7,13 +7,21 @@ class InputTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController controller;
   final bool borderless;
+  final TextAlign textAlign;
+  final bool enabled;
+  final String? value;
+  final void Function(String)? onChanged;
 
   const InputTextField({
     super.key,
+    this.value,
     this.labelText = '',
     this.hintText = '',
     this.isPassword = false,
     this.borderless = false,
+    this.textAlign = TextAlign.left,
+    this.enabled = true,
+    this.onChanged,
     required this.controller,
   });
 
@@ -47,6 +55,9 @@ class _CustomTextFormFieldState extends State<InputTextField> {
       ),
       alignment: Alignment.centerLeft,
       child: TextField(
+        onChanged: widget.onChanged,
+        enabled: widget.enabled,
+        textAlign: widget.textAlign,
         controller: widget.controller,
         obscureText: widget.isPassword ? _obscureText : false,
         obscuringCharacter: '*',

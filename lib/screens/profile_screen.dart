@@ -57,16 +57,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: const [
-            ProfilePictureCard(),
-            SizedBox(height: 16),
-            AboutCard(),
-            SizedBox(height: 16),
-            InterestCard(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: const [
+              ProfilePictureCard(),
+              SizedBox(height: 16),
+              AboutCard(),
+              SizedBox(height: 16),
+              InterestCard(),
+            ],
+          ),
         ),
       ),
     );
