@@ -69,6 +69,10 @@ class _DatePickerInputState extends State<DatePickerField> {
               hintText: 'DD MM YYYY',
               hintStyle: TextStyle(color: Colors.grey),
               fillColor: Colors.transparent,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 12,
+              ),
             ),
             style: TextStyle(color: Colors.white),
           ),

@@ -50,7 +50,8 @@ class _SelectFieldState extends State<SelectField> {
           items: widget.items,
           onChanged: widget.onChanged,
           style: const TextStyle(color: Colors.white),
-          dropdownColor: const Color(0xFF0E191F),
+          elevation: 5,
+          dropdownColor: AppColors.cardInfoDark,
         ),
       ),
     );
