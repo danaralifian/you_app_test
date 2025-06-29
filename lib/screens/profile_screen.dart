@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferredSize: const Size.fromHeight(56),
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AboutCard(),
               SizedBox(height: 16),
               InterestCard(),
+              SizedBox(height: 24),
             ],
           ),
         ),
