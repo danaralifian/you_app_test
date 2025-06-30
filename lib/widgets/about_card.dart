@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:you_app/theme/colors.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
 import 'package:you_app/widgets/input_text_field.dart';
 import 'package:you_app/widgets/select_field.dart';
@@ -46,7 +47,7 @@ class _AboutCardState extends State<AboutCard> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(22, 35, 41, 0.4),
+        color: AppColors.cardInfoDark,
         borderRadius: BorderRadius.circular(16),
       ),
       child: isEditing

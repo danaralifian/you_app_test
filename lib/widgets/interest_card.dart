@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/screens/interest_screen.dart';
+import 'package:you_app/theme/colors.dart';
 import 'package:you_app/widgets/interest_tags.dart';
 
 class InterestCard extends StatefulWidget {
@@ -25,7 +26,7 @@ class _InterestCardState extends State<InterestCard> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         //height: double.infinity,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(22, 35, 41, 0.4),
+          color: AppColors.cardInfoDark,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
