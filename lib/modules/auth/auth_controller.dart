@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:you_app/modules/auth/auth_service.dart';
 import 'package:you_app/modules/auth/models/auth_reponse.dart';
 import 'package:you_app/modules/auth/models/auth_request.dart';
+import 'package:you_app/routes/app_pages.dart';
 import 'package:you_app/utils/logger.dart';
 
 class AuthController extends GetxController {
@@ -45,6 +46,7 @@ class AuthController extends GetxController {
       user.value = await _authService.login(authRequest);
 
       Get.snackbar('Success', 'Logged in successfully');
+      Get.toNamed(Routes.profile);
     } catch (e) {
       error.value = 'Login failed: $e';
       Get.snackbar('Error', error.value);
