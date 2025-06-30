@@ -21,6 +21,8 @@ class UserService {
         'height': user.height,
         'weight': user.weight,
         'interests': user.interests,
+        'horoscope': user.horoscope,
+        'zodiac': user.zodiac,
       },
     );
 
@@ -36,6 +38,8 @@ class UserService {
         'height': user.height,
         'weight': user.weight,
         'interests': user.interests,
+        'horoscope': user.horoscope,
+        'zodiac': user.zodiac,
       },
     );
 

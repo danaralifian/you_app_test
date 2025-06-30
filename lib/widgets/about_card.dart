@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:you_app/modules/user/models/user.dart';
+import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
+import 'package:you_app/utils/horoscope_and_zodiac.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
 import 'package:you_app/widgets/input_text_field.dart';
 import 'package:you_app/widgets/select_field.dart';
@@ -19,7 +24,66 @@ class _AboutCardState extends State<AboutCard> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _horoscopeController = TextEditingController();
   final TextEditingController _zodiacController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
   String? selectedGender;
+  final _useController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _birthdayController.addListener(_setHoroscopeAndZodiac);
+    ever(_useController.user, (user) {
+      final data = user?.data;
+      if (data != null) {
+        _nameController.text = data.name ?? '';
+        _birthdayController.text = data.birthday ?? '';
+        _horoscopeController.text = data.horoscope ?? '';
+        _zodiacController.text = data.zodiac ?? '';
+        selectedGender = data.gender;
+        _heightController.text = data.height?.toString() ?? '';
+        _weightController.text = data.weight?.toString() ?? '';
+      }
+    });
+  }
+
+  void _setHoroscopeAndZodiac() {
+    DateTime birthDate = DateFormat(
+      "dd MM yyyy",
+    ).parse(_birthdayController.text);
+    final result = getHoroscopeAndZodiac(birthDate);
+
+    _horoscopeController.text = result['horoscope'] ?? '';
+    _zodiacController.text = result['zodiac'] ?? '';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _heightController.dispose();
+    _weightController.dispose();
+    _horoscopeController.dispose();
+    _zodiacController.dispose();
+    _birthdayController.dispose();
+    super.dispose();
+  }
+
+  void _saveAndUpdate() {
+    setState(() => isEditing = false);
+    _useController.updateProfile(
+      UserModel(
+        email: _useController.user.value!.data.email,
+        username: _useController.user.value!.data.username,
+        name: _nameController.text,
+        interests: _useController.user.value!.data.interests,
+        birthday: _birthdayController.text,
+        gender: selectedGender,
+        height: int.tryParse(_heightController.text),
+        weight: int.tryParse(_weightController.text),
+        horoscope: _horoscopeController.text,
+        zodiac: _zodiacController.text,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +131,7 @@ class _AboutCardState extends State<AboutCard> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        setState(() => isEditing = false);
-                      },
+                      onPressed: _saveAndUpdate,
                       child: const Text(
                         'Save & Update',
                         style: TextStyle(color: Colors.white),
@@ -110,9 +172,6 @@ class _AboutCardState extends State<AboutCard> {
                     controller: _nameController,
                     hintText: 'Enter name',
                     textAlign: TextAlign.right,
-                    onChanged: (value) {
-                      _horoscopeController.text = value;
-                    },
                   ),
                 ),
                 buildInput(
@@ -140,7 +199,10 @@ class _AboutCardState extends State<AboutCard> {
                 ),
                 buildInput(
                   label: 'Birthday',
-                  child: DatePickerField(textAlign: TextAlign.right),
+                  child: DatePickerField(
+                    textAlign: TextAlign.right,
+                    controller: _birthdayController,
+                  ),
                 ),
                 buildInput(
                   label: 'Horoscope',

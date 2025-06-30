@@ -6,6 +6,9 @@ class UserModel {
   final int? height;
   final int? weight;
   final List<String>? interests;
+  final String? horoscope;
+  final String? zodiac;
+  final String? gender;
 
   UserModel({
     required this.email,
@@ -15,6 +18,9 @@ class UserModel {
     this.height,
     this.weight,
     this.interests,
+    this.horoscope,
+    this.zodiac,
+    this.gender,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +32,9 @@ class UserModel {
       height: json['height'],
       weight: json['weight'],
       interests: List<String>.from(json['interests'] ?? []),
+      horoscope: json['horoscope'],
+      zodiac: json['zodiac'],
+      gender: json['gender'],
     );
   }
 
@@ -37,5 +46,8 @@ class UserModel {
     'height': height,
     'weight': weight,
     'interests': interests,
+    'horoscope': horoscope,
+    'zodiac': zodiac,
+    'gender': gender,
   };
 }

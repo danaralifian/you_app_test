@@ -15,6 +15,23 @@ class _InterestScreenState extends State<InterestScreen> {
   List<String> _interests = [];
   final _userController = Get.find<UserController>();
 
+  void _save() {
+    final username = _userController.user.value?.data.username;
+    final email = _userController.user.value?.data.email;
+    _userController.updateProfile(
+      UserModel(
+        email: email ?? '',
+        username: username ?? '',
+        birthday: _userController.user.value?.data.birthday ?? '',
+        height: _userController.user.value?.data.height ?? 0,
+        weight: _userController.user.value?.data.weight ?? 0,
+        horoscope: _userController.user.value?.data.horoscope ?? '',
+        zodiac: _userController.user.value?.data.zodiac ?? '',
+        interests: _interests,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +59,7 @@ class _InterestScreenState extends State<InterestScreen> {
                 SizedBox(
                   height: 46,
                   child: TextButton(
-                    onPressed: () {
-                      final username =
-                          _userController.user.value?.data.username;
-                      final email = _userController.user.value?.data.email;
-                      _userController.updateProfile(
-                        UserModel(
-                          email: email ?? '',
-                          username: username ?? '',
-                          interests: _interests,
-                        ),
-                      );
-                    },
+                    onPressed: _save,
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                       minimumSize: const Size(0, 0),

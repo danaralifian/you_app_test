@@ -2,20 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:you_app/theme/colors.dart';
 
 class DatePickerField extends StatefulWidget {
+  final TextEditingController? controller;
   final bool borderless;
   final TextAlign textAlign;
+
   const DatePickerField({
     this.borderless = false,
     this.textAlign = TextAlign.left,
     super.key,
+    this.controller,
   });
 
   @override
-  State<DatePickerField> createState() => _DatePickerInputState();
+  State<DatePickerField> createState() => _DatePickerFieldState();
 }
 
-class _DatePickerInputState extends State<DatePickerField> {
-  final TextEditingController _dateController = TextEditingController();
+class _DatePickerFieldState extends State<DatePickerField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose(); // Only dispose if it's internal
+    }
+    super.dispose();
+  }
 
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
@@ -43,7 +60,7 @@ class _DatePickerInputState extends State<DatePickerField> {
           '${picked.day.toString().padLeft(2, '0')} '
           '${picked.month.toString().padLeft(2, '0')} '
           '${picked.year}';
-      _dateController.text = formatted;
+      _controller.text = formatted;
     }
   }
 
@@ -52,7 +69,6 @@ class _DatePickerInputState extends State<DatePickerField> {
     return GestureDetector(
       onTap: _selectDate,
       child: Container(
-        width: double.infinity,
         height: 48,
         decoration: BoxDecoration(
           color: AppColors.inputFill,
@@ -64,7 +80,7 @@ class _DatePickerInputState extends State<DatePickerField> {
         child: AbsorbPointer(
           child: TextFormField(
             textAlign: widget.textAlign,
-            controller: _dateController,
+            controller: _controller,
             decoration: const InputDecoration(
               hintText: 'DD MM YYYY',
               hintStyle: TextStyle(color: Colors.grey),
@@ -73,8 +89,9 @@ class _DatePickerInputState extends State<DatePickerField> {
                 horizontal: 12,
                 vertical: 12,
               ),
+              border: InputBorder.none,
             ),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
