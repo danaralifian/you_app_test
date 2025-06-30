@@ -1,50 +1,36 @@
 Map<String, String> getHoroscopeAndZodiac(DateTime birthDate) {
-  final horoscopes = [
-    {
-      "sign": "Capricorn",
-      "start": DateTime(0, 12, 22),
-      "end": DateTime(0, 1, 19),
-    },
-    {
-      "sign": "Aquarius",
-      "start": DateTime(0, 1, 20),
-      "end": DateTime(0, 2, 18),
-    },
-    {"sign": "Pisces", "start": DateTime(0, 2, 19), "end": DateTime(0, 3, 20)},
-    {"sign": "Aries", "start": DateTime(0, 3, 21), "end": DateTime(0, 4, 19)},
-    {"sign": "Taurus", "start": DateTime(0, 4, 20), "end": DateTime(0, 5, 20)},
-    {"sign": "Gemini", "start": DateTime(0, 5, 21), "end": DateTime(0, 6, 20)},
-    {"sign": "Cancer", "start": DateTime(0, 6, 21), "end": DateTime(0, 7, 22)},
-    {"sign": "Leo", "start": DateTime(0, 7, 23), "end": DateTime(0, 8, 22)},
-    {"sign": "Virgo", "start": DateTime(0, 8, 23), "end": DateTime(0, 9, 22)},
-    {"sign": "Libra", "start": DateTime(0, 9, 23), "end": DateTime(0, 10, 22)},
-    {
-      "sign": "Scorpio",
-      "start": DateTime(0, 10, 23),
-      "end": DateTime(0, 11, 21),
-    },
-    {
-      "sign": "Sagittarius",
-      "start": DateTime(0, 11, 22),
-      "end": DateTime(0, 12, 21),
-    },
+  final List<List<Object>> horoscopes = [
+    ["Capricorn", 1222, 119],
+    ["Aquarius", 120, 218],
+    ["Pisces", 219, 320],
+    ["Aries", 321, 419],
+    ["Taurus", 420, 520],
+    ["Gemini", 521, 621],
+    ["Cancer", 622, 722],
+    ["Leo", 723, 822],
+    ["Virgo", 823, 922],
+    ["Libra", 923, 1023],
+    ["Scorpio", 1024, 1121],
+    ["Sagittarius", 1122, 1221],
   ];
 
-  String horoscope = '';
-  for (var h in horoscopes) {
-    final start = h['start'] as DateTime;
-    final end = h['end'] as DateTime;
-    final current = DateTime(0, birthDate.month, birthDate.day);
+  final mmdd = birthDate.month * 100 + birthDate.day;
 
-    if ((start.month == 12 && current.month == 1 && current.day <= end.day) ||
-        (current.isAfter(start) && current.isBefore(end)) ||
-        (current.month == start.month && current.day >= start.day)) {
-      horoscope = h['sign'] as String;
-      break;
-    }
-  }
+  final horoscope =
+      horoscopes.firstWhere(
+            (h) =>
+                (mmdd >= (h[1] as int) && mmdd <= (h[2] as int)) ||
+                ((h[1] as int) > (h[2] as int) &&
+                    (mmdd >= (h[1] as int) || mmdd <= (h[2] as int))),
+            orElse: () => ["Capricorn", 1222, 119],
+          )[0]
+          as String;
 
-  const zodiacList = [
+  const chineseZodiacs = [
+    "Monkey",
+    "Rooster",
+    "Dog",
+    "Pig",
     "Rat",
     "Ox",
     "Tiger",
@@ -53,12 +39,11 @@ Map<String, String> getHoroscopeAndZodiac(DateTime birthDate) {
     "Snake",
     "Horse",
     "Goat",
-    "Monkey",
-    "Rooster",
-    "Dog",
-    "Pig",
   ];
-  final zodiac = zodiacList[birthDate.year % 12];
+
+  final zodiacIndex = (birthDate.year - 2016) % 12;
+  final zodiac =
+      chineseZodiacs[zodiacIndex < 0 ? zodiacIndex + 12 : zodiacIndex];
 
   return {"horoscope": horoscope, "zodiac": zodiac};
 }

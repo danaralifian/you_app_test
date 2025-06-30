@@ -7,6 +7,7 @@ import 'package:you_app/theme/colors.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
 import 'package:you_app/widgets/input_text_field.dart';
+import 'package:you_app/widgets/profile_info.dart';
 import 'package:you_app/widgets/select_field.dart';
 
 class AboutCard extends StatefulWidget {
@@ -87,7 +88,7 @@ class _AboutCardState extends State<AboutCard> {
 
   @override
   Widget build(BuildContext context) {
-    const inputFill = Color.fromRGBO(255, 255, 255, 0.06);
+    final bool isProfileComplete = _useController.user.value?.data.name != null;
 
     Widget buildInput({required String label, Widget? child}) {
       return Padding(
@@ -147,7 +148,7 @@ class _AboutCardState extends State<AboutCard> {
                       width: 64,
                       height: 64,
                       decoration: BoxDecoration(
-                        color: inputFill,
+                        color: AppColors.inputFill,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
@@ -265,15 +266,32 @@ class _AboutCardState extends State<AboutCard> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 28),
-                const Text(
-                  'Add in your your to help others know you better',
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 0.52),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                SizedBox(height: isProfileComplete ? 24 : 28),
+                isProfileComplete
+                    ? Obx(() {
+                        final user = _useController.user.value?.data;
+                        if (user == null) return SizedBox();
+
+                        final birthDate = DateFormat(
+                          "dd MM yyyy",
+                        ).parse(user.birthday ?? "01 01 2000");
+
+                        return ProfileInfo(
+                          birthday: birthDate,
+                          horoscope: user.horoscope ?? '',
+                          zodiac: user.zodiac ?? '',
+                          height: user.height,
+                          weight: user.weight,
+                        );
+                      })
+                    : const Text(
+                        'Add in your your to help others know you better',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.52),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
               ],
             ),
     );
