@@ -1,13 +1,16 @@
 class AuthRequest {
   final String email;
   final String password;
-  final String? username; // optional for login
+  final String username;
 
-  AuthRequest({required this.email, required this.password, this.username});
+  AuthRequest({
+    required this.email,
+    required this.password,
+    required this.username,
+  });
 
   Map<String, dynamic> toJson() {
-    final data = {'email': email, 'password': password};
-    if (username != null) data['username'] = username ?? '';
+    final data = {'email': email, 'password': password, 'username': ''};
     return data;
   }
 }

@@ -22,7 +22,11 @@ class AuthService {
   Future<AuthResponse> login(AuthRequest authRequest) async {
     final response = await _dio.post(
       '/login',
-      data: {'email': authRequest.email, 'password': authRequest.password},
+      data: {
+        'email': authRequest.email,
+        'password': authRequest.password,
+        'username': authRequest.username,
+      },
     );
 
     return AuthResponse.fromJson(response.data);
