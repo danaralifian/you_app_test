@@ -1,32 +1,11 @@
-class UserRequest {
-  final String email;
-  final String username;
-  final String? name;
-  final String? birthday;
-  final int? height;
-  final int? weight;
-  final List<String>? interests;
+import 'package:you_app/modules/user/models/user.dart';
 
-  UserRequest({
-    required this.email,
-    required this.username,
-    this.name,
-    this.birthday,
-    this.height,
-    this.weight,
-    this.interests,
-  });
+class UserRequest {
+  final UserModel data;
+
+  UserRequest({required this.data});
 
   Map<String, dynamic> toJson() {
-    final data = {
-      'email': email,
-      'username': username,
-      'name': name,
-      'birthday': birthday,
-      'height': height,
-      'weight': weight,
-      'interests': interests,
-    };
-    return data;
+    return data.toJson();
   }
 }

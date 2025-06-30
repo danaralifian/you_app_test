@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:you_app/modules/user/models/user_request.dart';
+import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/models/user_response.dart';
 
 class UserService {
@@ -12,30 +12,30 @@ class UserService {
     return UserResponse.fromJson(response.data);
   }
 
-  Future<UserResponse> createProfile(UserRequest userRequest) async {
+  Future<UserResponse> createProfile(UserModel user) async {
     final response = await _dio.post(
       '/createProfile',
       data: {
-        'name': userRequest.name,
-        'birthday': userRequest.birthday,
-        'height': userRequest.height,
-        'weight': userRequest.weight,
-        'interests': userRequest.interests,
+        'name': user.name,
+        'birthday': user.birthday,
+        'height': user.height,
+        'weight': user.weight,
+        'interests': user.interests,
       },
     );
 
     return UserResponse.fromJson(response.data);
   }
 
-  Future<UserResponse> updateProfile(UserRequest userRequest) async {
+  Future<UserResponse> updateProfile(UserModel user) async {
     final response = await _dio.put(
       '/updateProfile',
       data: {
-        'name': userRequest.name,
-        'birthday': userRequest.birthday,
-        'height': userRequest.height,
-        'weight': userRequest.weight,
-        'interests': userRequest.interests,
+        'name': user.name,
+        'birthday': user.birthday,
+        'height': user.height,
+        'weight': user.weight,
+        'interests': user.interests,
       },
     );
 

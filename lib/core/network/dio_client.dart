@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:you_app/modules/auth/auth_controller.dart';
 import 'package:you_app/utils/dio_logger.dart';
 
 class DioClient {
@@ -12,6 +14,20 @@ class DioClient {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+        },
+      ),
+    );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          final token = Get.find<AuthController>().user.value?.accessToken;
+
+          if (token != null && token.isNotEmpty) {
+            options.headers['x-access-token'] = token;
+          }
+
+          return handler.next(options);
         },
       ),
     );

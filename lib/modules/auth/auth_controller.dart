@@ -3,7 +3,6 @@ import 'package:you_app/modules/auth/auth_service.dart';
 import 'package:you_app/modules/auth/models/auth_reponse.dart';
 import 'package:you_app/modules/auth/models/auth_request.dart';
 import 'package:you_app/routes/app_pages.dart';
-import 'package:you_app/utils/logger.dart';
 
 class AuthController extends GetxController {
   // instance of auth service
@@ -22,10 +21,6 @@ class AuthController extends GetxController {
   Future<void> register(AuthRequest authRequest) async {
     try {
       isLoading.value = true;
-
-      log.i(
-        '{$authRequest.email, $authRequest.username, $authRequest.password  }',
-      );
 
       await _authService.register(authRequest);
 

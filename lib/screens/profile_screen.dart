@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
 import 'package:you_app/widgets/about_card.dart';
 import 'package:you_app/widgets/interest_card.dart';
@@ -12,6 +14,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _userController.getProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +47,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
 
                 // Center username
-                const Text(
-                  '@johndoe',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                Obx(() {
+                  final username = _userController.user.value?.data.username;
+                  return Text(
+                    '@${username ?? ''}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                }),
 
                 // More icon
                 IconButton(

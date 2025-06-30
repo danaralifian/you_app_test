@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:you_app/modules/user/models/user_request.dart';
+import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/models/user_response.dart';
 import 'package:you_app/modules/user/user_service.dart';
 import 'package:you_app/routes/app_pages.dart';
@@ -22,19 +22,17 @@ class UserController extends GetxController {
     try {
       isLoading.value = true;
 
-      await _userService.getProfile();
-
-      Get.snackbar('Success', 'Registered successfully');
+      user.value = await _userService.getProfile();
     } catch (e) {
-      error.value = 'Registration failed: $e';
-      Get.snackbar('Error Registration', error.value);
+      error.value = 'Get profile failed: $e';
+      Get.snackbar('Error', error.value);
     } finally {
       isLoading.value = false;
     }
   }
 
   // create user profile method
-  Future<void> createProfile(UserRequest userRequest) async {
+  Future<void> createProfile(UserModel userRequest) async {
     try {
       isLoading.value = true;
 
@@ -50,7 +48,7 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> updateProfile(UserRequest userRequest) async {
+  Future<void> updateProfile(UserModel userRequest) async {
     try {
       isLoading.value = true;
 

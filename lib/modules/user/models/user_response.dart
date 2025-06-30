@@ -1,34 +1,16 @@
+import 'package:you_app/modules/user/models/user.dart';
+
 class UserResponse {
   final String message;
-  final String email;
-  final String username;
-  final String? name;
-  final String? birthday;
-  final int? height;
-  final int? weight;
-  final List<String>? interests;
+  final UserModel data;
 
-  UserResponse({
-    required this.message,
-    required this.email,
-    required this.username,
-    this.name,
-    this.birthday,
-    this.height,
-    this.weight,
-    this.interests,
-  });
+  UserResponse({required this.message, required this.data});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? {};
     return UserResponse(
       message: json['message'],
-      email: json['email'],
-      username: json['username'],
-      name: json['name'] ?? '',
-      birthday: json['birthday'] ?? '',
-      height: json['height'] ?? 0,
-      weight: json['weight'] ?? 0,
-      interests: json['interests']?.cast<String>() ?? [],
+      data: UserModel.fromJson(data),
     );
   }
 }

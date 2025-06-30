@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
 
 class ProfilePictureCard extends StatefulWidget {
@@ -9,6 +11,8 @@ class ProfilePictureCard extends StatefulWidget {
 }
 
 class _ProfilePictureCardState extends State<ProfilePictureCard> {
+  final _userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +32,16 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
               onPressed: () {},
             ),
           ),
-          Positioned(bottom: 16, left: 16, child: Text('@John Doe')),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            child: Obx(
+              () => Text(
+                '@${_userController.user.value?.data.username ?? ''}',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ),
+          ),
         ],
       ),
     );
