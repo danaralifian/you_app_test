@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:you_app/modules/user/models/user.dart';
+import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/widgets/interest_input.dart';
 
 class InterestScreen extends StatefulWidget {
@@ -9,6 +12,9 @@ class InterestScreen extends StatefulWidget {
 }
 
 class _InterestScreenState extends State<InterestScreen> {
+  List<String> _interests = [];
+  final _userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +42,18 @@ class _InterestScreenState extends State<InterestScreen> {
                 SizedBox(
                   height: 46,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final username =
+                          _userController.user.value?.data.username;
+                      final email = _userController.user.value?.data.email;
+                      _userController.updateProfile(
+                        UserModel(
+                          email: email ?? '',
+                          username: username ?? '',
+                          interests: _interests,
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                       minimumSize: const Size(0, 0),
@@ -71,7 +88,7 @@ class _InterestScreenState extends State<InterestScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 64),
+              const SizedBox(height: 64),
               ShaderMask(
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) {
@@ -98,8 +115,8 @@ class _InterestScreenState extends State<InterestScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 12),
-              Text(
+              const SizedBox(height: 12),
+              const Text(
                 'What interest you?',
                 style: TextStyle(
                   color: Colors.white,
@@ -108,7 +125,14 @@ class _InterestScreenState extends State<InterestScreen> {
                 ),
               ),
               SizedBox(height: 35),
-              InterestInput(),
+              Obx(
+                () => InterestInput(
+                  onChange: (value) {
+                    setState(() => _interests = value);
+                  },
+                  value: _userController.user.value?.data.interests,
+                ),
+              ),
             ],
           ),
         ),

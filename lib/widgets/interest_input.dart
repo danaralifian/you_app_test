@@ -1,27 +1,46 @@
 import 'package:flutter/material.dart';
 
 class InterestInput extends StatefulWidget {
-  const InterestInput({super.key});
+  final void Function(List<String> value) onChange;
+  final List<String>? value;
+  const InterestInput({
+    super.key,
+    required this.onChange,
+    this.value = const [],
+  });
 
   @override
   State<InterestInput> createState() => _InterestInputState();
 }
 
 class _InterestInputState extends State<InterestInput> {
-  final List<String> _interests = [];
+  List<String> _interests = [];
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // Inisialisasi dengan widget.value, fallback ke list kosong jika null
+    _interests = List.from(widget.value ?? []);
+  }
 
   void _addInterest(String value) {
     final trimmed = value.trim();
     if (trimmed.isNotEmpty && !_interests.contains(trimmed)) {
-      setState(() => _interests.add(trimmed));
+      setState(() {
+        _interests.add(trimmed);
+        widget.onChange(_interests);
+      });
     }
     _controller.clear();
   }
 
   void _removeInterest(String interest) {
-    setState(() => _interests.remove(interest));
+    setState(() {
+      _interests.remove(interest);
+      widget.onChange(_interests);
+    });
   }
 
   @override
