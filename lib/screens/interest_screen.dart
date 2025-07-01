@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/user_controller.dart';
+import 'package:you_app/widgets/gold_text.dart';
 import 'package:you_app/widgets/interest_input.dart';
 
 class InterestScreen extends StatefulWidget {
@@ -95,30 +96,10 @@ class _InterestScreenState extends State<InterestScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 64),
-              ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (Rect bounds) {
-                  return LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color(0xFF94783E),
-                      Color(0xFFF3EDA6),
-                      Color(0xFFFFE2BE),
-                      Color(0xFFD5BE88),
-                      Color(0xFFD5BE88),
-                      Color(0xFFFFE2BE),
-                    ],
-                    stops: [0.0, 0.1676, 0.3209, 0.4109, 0.9660, 0.8901],
-                  ).createShader(bounds);
-                },
+              GoldText(
                 child: const Text(
                   'Tell everyone about yourself',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
               ),
               const SizedBox(height: 12),

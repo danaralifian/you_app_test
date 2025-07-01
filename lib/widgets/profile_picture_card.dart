@@ -25,14 +25,6 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
       child: Stack(
         children: [
           Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-              icon: const Icon(Icons.edit, color: Colors.white, size: 20),
-              onPressed: () {},
-            ),
-          ),
-          Positioned(
             bottom: 16,
             left: 16,
             child: Obx(

@@ -6,6 +6,7 @@ import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
+import 'package:you_app/widgets/gold_text.dart';
 import 'package:you_app/widgets/input_text_field.dart';
 import 'package:you_app/widgets/profile_info.dart';
 import 'package:you_app/widgets/select_field.dart';
@@ -133,9 +134,14 @@ class _AboutCardState extends State<AboutCard> {
                     ),
                     TextButton(
                       onPressed: _saveAndUpdate,
-                      child: const Text(
-                        'Save & Update',
-                        style: TextStyle(color: Colors.white),
+                      child: GoldText(
+                        child: const Text(
+                          'Save & Update',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ),
                   ],
