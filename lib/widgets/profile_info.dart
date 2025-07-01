@@ -57,21 +57,18 @@ class ProfileInfo extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Wrap(
+      spacing: 15,
+      direction: Axis.vertical,
       children: [
         infoItem('Birthday', '$formattedBirthday (Age $age)'),
-        SizedBox(height: 15),
         infoItem('Horoscope', horoscope),
-        SizedBox(height: 15),
         infoItem('Zodiac', zodiac),
-        SizedBox(height: 15),
         infoItem(
           'Height',
           height != null ? '$height cm' : '--',
           isDimmed: height == null,
         ),
-        SizedBox(height: 15),
         infoItem(
           'Weight',
           weight != null ? '$weight kg' : '--',
