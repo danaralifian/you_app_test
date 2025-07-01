@@ -5,6 +5,7 @@ import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
+import 'package:you_app/utils/logger.dart';
 import 'package:you_app/widgets/add_image_profile.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
 import 'package:you_app/widgets/gold_text.dart';
@@ -50,13 +51,19 @@ class _AboutCardState extends State<AboutCard> {
   }
 
   void _setHoroscopeAndZodiac() {
-    DateTime birthDate = DateFormat(
-      "dd MM yyyy",
-    ).parse(_birthdayController.text);
-    final result = getHoroscopeAndZodiac(birthDate);
+    final text = _birthdayController.text.trim();
 
-    _horoscopeController.text = result['horoscope'] ?? '';
-    _zodiacController.text = result['zodiac'] ?? '';
+    if (text.isEmpty) return;
+
+    try {
+      final birthDate = DateFormat("dd MM yyyy").parse(text);
+      final result = getHoroscopeAndZodiac(birthDate);
+
+      _horoscopeController.text = result['horoscope'] ?? '';
+      _zodiacController.text = result['zodiac'] ?? '';
+    } catch (e) {
+      log.i('Invalid birthday format: $text');
+    }
   }
 
   @override
@@ -262,9 +269,12 @@ class _AboutCardState extends State<AboutCard> {
                         final user = _useController.user.value?.data;
                         if (user == null) return SizedBox();
 
-                        final birthDate = DateFormat(
-                          "dd MM yyyy",
-                        ).parse(user.birthday ?? "01 01 2000");
+                        final birthdayString = user.birthday;
+                        final birthDate =
+                            (birthdayString != null &&
+                                birthdayString.trim().isNotEmpty)
+                            ? DateFormat("dd MM yyyy").parse(birthdayString)
+                            : DateTime(2000, 1, 1);
 
                         return ProfileInfo(
                           birthday: birthDate,

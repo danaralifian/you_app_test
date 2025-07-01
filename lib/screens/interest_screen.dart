@@ -23,6 +23,7 @@ class _InterestScreenState extends State<InterestScreen> {
       UserModel(
         email: email ?? '',
         username: username ?? '',
+        name: _userController.user.value?.data.name ?? '',
         birthday: _userController.user.value?.data.birthday ?? '',
         height: _userController.user.value?.data.height ?? 0,
         weight: _userController.user.value?.data.weight ?? 0,
