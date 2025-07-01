@@ -75,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Padding(
           padding: EdgeInsets.all(8),
           child: Column(
-            children: const [
+            children: [
               ProfilePictureCard(),
               SizedBox(height: 16),
               AboutCard(),

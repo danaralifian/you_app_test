@@ -47,3 +47,38 @@ Map<String, String> getHoroscopeAndZodiac(DateTime birthDate) {
 
   return {"horoscope": horoscope, "zodiac": zodiac};
 }
+
+Map<String, String> getZodiacIcon(String name) {
+  const allZodiacs = {
+    // Horoscope (Western)
+    "Capricorn": "♑",
+    "Aquarius": "♒",
+    "Pisces": "♓",
+    "Aries": "♈",
+    "Taurus": "♉",
+    "Gemini": "♊",
+    "Cancer": "♋",
+    "Leo": "♌",
+    "Virgo": "♍",
+    "Libra": "♎",
+    "Scorpio": "♏",
+    "Sagittarius": "♐",
+
+    // Chinese Zodiac
+    "Rat": "🐀",
+    "Ox": "🐂",
+    "Tiger": "🐅",
+    "Rabbit": "🐇",
+    "Dragon": "🐉",
+    "Snake": "🐍",
+    "Horse": "🐎",
+    "Goat": "🐐",
+    "Monkey": "🐒",
+    "Rooster": "🐓",
+    "Dog": "🐕",
+    "Pig": "🐖",
+  };
+
+  final icon = allZodiacs[name];
+  return {"name": name, "icon": icon ?? "❓"};
+}
