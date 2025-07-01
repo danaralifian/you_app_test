@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
+import 'package:you_app/utils/age.dart';
+import 'package:you_app/utils/date.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
 import 'package:you_app/widgets/zodiac_badge.dart';
 
@@ -21,6 +23,11 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
   Widget build(BuildContext context) {
     return Obx(() {
       final profileImage = _userController.user.value?.data.profileImage ?? '';
+      final birthday = parseBirthday(_userController.user.value?.data.birthday);
+      final age = calculateAge(birthday);
+      final horoscope = _userController.user.value?.data.horoscope;
+      final zodiac = _userController.user.value?.data.zodiac;
+      final gender = _userController.user.value?.data.gender;
 
       return Container(
         width: double.infinity,
@@ -57,12 +64,17 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
               bottom: 16,
               left: 16,
               child: Wrap(
-                spacing: 6,
+                spacing:
+                    (horoscope?.isEmpty ?? true) &&
+                        (zodiac?.isEmpty ?? true) &&
+                        (gender?.isEmpty ?? true)
+                    ? 0
+                    : 6,
                 direction: Axis.vertical,
                 children: [
                   Obx(
                     () => Text(
-                      '@${_userController.user.value?.data.username ?? ''}',
+                      '@${_userController.user.value?.data.username ?? ''} ${age != null ? ', $age' : ''}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -70,44 +82,33 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
                       ),
                     ),
                   ),
-                  Obx(
-                    () =>
-                        (_userController.user.value?.data.gender?.isEmpty ??
-                            true)
-                        ? const SizedBox()
-                        : Text(
-                            _userController.user.value?.data.gender ?? '',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                  (_userController.user.value?.data.gender?.isEmpty ?? true)
+                      ? const SizedBox.shrink()
+                      : Text(
+                          _userController.user.value?.data.gender ?? '',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
                           ),
-                  ),
-                  Obx(
-                    () => Wrap(
-                      spacing: 15,
-                      children: [
-                        ZodiacBadge(
-                          label:
-                              _userController.user.value?.data.horoscope ?? '',
-                          icon:
-                              getZodiacIcon(
-                                _userController.user.value?.data.horoscope ??
-                                    '',
-                              )["icon"] ??
-                              '',
                         ),
-                        ZodiacBadge(
-                          label: _userController.user.value?.data.zodiac ?? '',
-                          icon:
-                              getZodiacIcon(
-                                _userController.user.value?.data.zodiac ?? '',
-                              )["icon"] ??
-                              '',
-                        ),
-                      ],
-                    ),
+                  Wrap(
+                    spacing: 15,
+                    children: [
+                      horoscope?.isEmpty ?? true
+                          ? const SizedBox()
+                          : ZodiacBadge(
+                              label: horoscope ?? '',
+                              icon:
+                                  getZodiacIcon(horoscope ?? '')["icon"] ?? '',
+                            ),
+                      zodiac?.isEmpty ?? true
+                          ? const SizedBox()
+                          : ZodiacBadge(
+                              label: zodiac ?? '',
+                              icon: getZodiacIcon(zodiac ?? '')["icon"] ?? '',
+                            ),
+                    ],
                   ),
                 ],
               ),

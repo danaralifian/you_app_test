@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
+import 'package:you_app/utils/date.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
 import 'package:you_app/utils/logger.dart';
 import 'package:you_app/widgets/add_image_profile.dart';
@@ -287,14 +288,9 @@ class _AboutCardState extends State<AboutCard> {
                         if (user == null) return SizedBox();
 
                         final birthdayString = user.birthday;
-                        final birthDate =
-                            (birthdayString != null &&
-                                birthdayString.trim().isNotEmpty)
-                            ? DateFormat("dd MM yyyy").parse(birthdayString)
-                            : DateTime(2000, 1, 1);
 
                         return ProfileInfo(
-                          birthday: birthDate,
+                          birthday: parseBirthday(birthdayString),
                           horoscope: user.horoscope ?? '',
                           zodiac: user.zodiac ?? '',
                           height: user.height,

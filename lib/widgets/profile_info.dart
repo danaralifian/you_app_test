@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:you_app/utils/age.dart';
+import 'package:you_app/utils/date.dart';
 
 class ProfileInfo extends StatelessWidget {
-  final DateTime birthday;
+  final DateTime? birthday;
   final String horoscope;
   final String zodiac;
   final int? height;
@@ -19,15 +20,8 @@ class ProfileInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final age =
-        DateTime.now().year -
-        birthday.year -
-        (DateTime.now().month < birthday.month ||
-                (DateTime.now().month == birthday.month &&
-                    DateTime.now().day < birthday.day)
-            ? 1
-            : 0);
-    final formattedBirthday = DateFormat('dd / MM / yyyy').format(birthday);
+    final age = calculateAge(birthday);
+    final formattedBirthday = formatDatetoString(birthday);
 
     Widget infoItem(String label, String value, {bool isDimmed = false}) {
       return Padding(
