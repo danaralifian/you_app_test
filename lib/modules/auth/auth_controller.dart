@@ -22,8 +22,8 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
 
-      await _authService.register(authRequest);
-
+      user.value = await _authService.register(authRequest);
+      Get.toNamed(Routes.profile);
       Get.snackbar('Success', 'Registered successfully');
     } catch (e) {
       error.value = 'Registration failed: $e';

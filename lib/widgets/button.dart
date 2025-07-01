@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
+  final bool? isLoading;
 
-  const Button({super.key, required this.text, this.onPressed});
+  const Button({super.key, required this.text, this.onPressed, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class Button extends StatelessWidget {
           ],
         ),
         child: ElevatedButton(
-          onPressed: onPressed,
+          onPressed: isLoading ?? false ? null : onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
@@ -50,7 +51,13 @@ class Button extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          child: Text(text, style: TextStyle(color: Colors.white)),
+          child: isLoading ?? false
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(color: Colors.white),
+                )
+              : Text(text, style: TextStyle(color: Colors.white)),
         ),
       ),
     );

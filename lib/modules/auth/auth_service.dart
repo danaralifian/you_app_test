@@ -7,7 +7,7 @@ class AuthService {
   final Dio _dio = Get.find<Dio>();
 
   Future<AuthResponse> register(AuthRequest authRequest) async {
-    final response = await _dio.post(
+    await _dio.post(
       '/register',
       data: {
         'email': authRequest.email,
@@ -16,7 +16,9 @@ class AuthService {
       },
     );
 
-    return AuthResponse.fromJson(response.data);
+    final response = await login(authRequest);
+
+    return response;
   }
 
   Future<AuthResponse> login(AuthRequest authRequest) async {

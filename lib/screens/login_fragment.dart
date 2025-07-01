@@ -132,9 +132,12 @@ class _LoginScreenState extends State<LoginFragment> {
                       validator: ValidationBuilder().minLength(6).build(),
                     ),
                     const SizedBox(height: 40),
-                    Button(
-                      text: 'Login',
-                      onPressed: _isFormFilled ? _login : null,
+                    Obx(
+                      () => Button(
+                        text: 'Login',
+                        onPressed: _isFormFilled ? _login : null,
+                        isLoading: _authController.isLoading.value,
+                      ),
                     ),
                     const SizedBox(height: 30),
                     Center(

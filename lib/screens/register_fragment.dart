@@ -159,9 +159,12 @@ class _RegisterScreenState extends State<RegisterFragment> {
                       },
                     ),
                     const SizedBox(height: 40),
-                    Button(
-                      text: 'Register',
-                      onPressed: _isFormFilled ? _register : null,
+                    Obx(
+                      () => Button(
+                        text: 'Register',
+                        onPressed: _isFormFilled ? _register : null,
+                        isLoading: _authController.isLoading.value,
+                      ),
                     ),
                     const SizedBox(height: 30),
                     Center(
