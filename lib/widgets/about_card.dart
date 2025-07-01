@@ -5,6 +5,7 @@ import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/theme/colors.dart';
 import 'package:you_app/utils/horoscope_and_zodiac.dart';
+import 'package:you_app/widgets/add_image_profile.dart';
 import 'package:you_app/widgets/date_picker_field.dart';
 import 'package:you_app/widgets/gold_text.dart';
 import 'package:you_app/widgets/input_text_field.dart';
@@ -148,28 +149,7 @@ class _AboutCardState extends State<AboutCard> {
                 ),
                 const SizedBox(height: 16),
                 // Avatar
-                Row(
-                  children: [
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: AppColors.inputFill,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: Color(0xFFF3EDA6),
-                        size: 32,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Text(
-                      'Add image',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
+                AddImageProfile(),
                 const SizedBox(height: 24),
 
                 // Form fields
