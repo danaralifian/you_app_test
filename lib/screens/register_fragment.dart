@@ -127,6 +127,7 @@ class _RegisterScreenState extends State<RegisterFragment> {
                       hintText: 'Enter Email',
                       controller: _emailController,
                       borderless: true,
+                      size: InputSize.large,
                       validator: ValidationBuilder().email().build(),
                     ),
                     const SizedBox(height: 20),
@@ -134,6 +135,7 @@ class _RegisterScreenState extends State<RegisterFragment> {
                       hintText: 'Create Username',
                       controller: _usernameController,
                       borderless: true,
+                      size: InputSize.large,
                       validator: ValidationBuilder().minLength(4).build(),
                     ),
                     const SizedBox(height: 20),
@@ -142,6 +144,7 @@ class _RegisterScreenState extends State<RegisterFragment> {
                       isPassword: true,
                       controller: _passwordController,
                       borderless: true,
+                      size: InputSize.large,
                       validator: ValidationBuilder().minLength(6).build(),
                     ),
                     const SizedBox(height: 20),
@@ -150,6 +153,7 @@ class _RegisterScreenState extends State<RegisterFragment> {
                       isPassword: true,
                       controller: _confirmPasswordController,
                       borderless: true,
+                      size: InputSize.large,
                       validator: (value) {
                         if (value == null || value.isEmpty) return 'Required';
                         if (value != _passwordController.text) {

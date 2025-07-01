@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:you_app/theme/colors.dart';
 
+enum InputSize { normal, large }
+
 class InputTextField extends StatefulWidget {
   final String labelText;
   final String hintText;
@@ -13,6 +15,7 @@ class InputTextField extends StatefulWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final String? suffixText;
+  final InputSize? size;
 
   const InputTextField({
     super.key,
@@ -26,6 +29,7 @@ class InputTextField extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.suffixText,
+    this.size = InputSize.normal,
     required this.controller,
   });
 
@@ -50,9 +54,9 @@ class _CustomTextFormFieldState extends State<InputTextField> {
       decoration: InputDecoration(
         suffixText: widget.suffixText,
         suffixStyle: TextStyle(color: Colors.white),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 14,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: widget.size == InputSize.normal ? 12 : 14,
+          vertical: widget.size == InputSize.normal ? 14 : 16,
         ),
         hintText: widget.hintText,
         hintStyle: const TextStyle(color: Colors.grey),

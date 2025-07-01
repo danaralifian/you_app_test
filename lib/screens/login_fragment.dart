@@ -122,6 +122,7 @@ class _LoginScreenState extends State<LoginFragment> {
                       controller: _emailOrUsernameController,
                       borderless: true,
                       validator: ValidationBuilder().minLength(3).build(),
+                      size: InputSize.large,
                     ),
                     const SizedBox(height: 16),
                     InputTextField(
@@ -130,6 +131,7 @@ class _LoginScreenState extends State<LoginFragment> {
                       controller: _passwordController,
                       borderless: true,
                       validator: ValidationBuilder().minLength(6).build(),
+                      size: InputSize.large,
                     ),
                     const SizedBox(height: 40),
                     Obx(
