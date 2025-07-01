@@ -40,6 +40,17 @@ class _ProfilePictureCardState extends State<ProfilePictureCard> {
                   ),
                 ),
                 Obx(
+                  () => _userController.user.value?.data.gender?.isEmpty ?? true
+                      ? const Text('')
+                      : Text(
+                          _userController.user.value?.data.gender ?? '',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                ),
+                Obx(
                   () => Wrap(
                     spacing: 15,
                     children: [

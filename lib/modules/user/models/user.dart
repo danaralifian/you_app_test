@@ -9,6 +9,7 @@ class UserModel {
   final String? horoscope;
   final String? zodiac;
   final String? gender;
+  final String? profileImage;
 
   UserModel({
     required this.email,
@@ -21,6 +22,7 @@ class UserModel {
     this.horoscope,
     this.zodiac,
     this.gender,
+    this.profileImage,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class UserModel {
       horoscope: json['horoscope'],
       zodiac: json['zodiac'],
       gender: json['gender'],
+      profileImage: json['profileImage'],
     );
   }
 
@@ -49,5 +52,6 @@ class UserModel {
     'horoscope': horoscope,
     'zodiac': zodiac,
     'gender': gender,
+    'profileImage': profileImage,
   };
 }

@@ -33,6 +33,8 @@ class UserService {
     final response = await _dio.put(
       '/updateProfile',
       data: {
+        'username': user.username,
+        'email': user.email,
         'name': user.name,
         'birthday': user.birthday,
         'height': user.height,
@@ -40,6 +42,7 @@ class UserService {
         'interests': user.interests,
         'horoscope': user.horoscope,
         'zodiac': user.zodiac,
+        'gender': user.gender,
       },
     );
 

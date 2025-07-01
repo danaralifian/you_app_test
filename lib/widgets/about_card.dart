@@ -30,7 +30,7 @@ class _AboutCardState extends State<AboutCard> {
   final TextEditingController _zodiacController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   String? selectedGender;
-  final _useController = Get.find<UserController>();
+  final _userController = Get.find<UserController>();
 
   @override
   void initState() {
@@ -38,10 +38,10 @@ class _AboutCardState extends State<AboutCard> {
     _birthdayController.addListener(_setHoroscopeAndZodiac);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final data = _useController.user.value?.data;
+      final data = _userController.user.value?.data;
       if (data != null) _fillForm(data);
 
-      ever(_useController.user, (user) {
+      ever(_userController.user, (user) {
         final data = user?.data;
         if (data != null) _fillForm(data);
       });
@@ -86,18 +86,19 @@ class _AboutCardState extends State<AboutCard> {
   }
 
   void _saveAndUpdate() {
-    _useController.updateProfile(
+    _userController.updateProfile(
       UserModel(
-        email: _useController.user.value!.data.email,
-        username: _useController.user.value!.data.username,
+        email: _userController.user.value!.data.email,
+        username: _userController.user.value!.data.username,
         name: _nameController.text,
-        interests: _useController.user.value!.data.interests,
+        interests: _userController.user.value!.data.interests,
         birthday: _birthdayController.text,
         gender: selectedGender,
         height: int.tryParse(_heightController.text),
         weight: int.tryParse(_weightController.text),
         horoscope: _horoscopeController.text,
         zodiac: _zodiacController.text,
+        profileImage: _userController.user.value?.data.profileImage ?? '',
       ),
     );
 
@@ -106,7 +107,8 @@ class _AboutCardState extends State<AboutCard> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isProfileComplete = _useController.user.value?.data.name != null;
+    final bool isProfileComplete =
+        _userController.user.value?.data.name != null;
 
     Widget buildInput({required String label, Widget? child}) {
       return Padding(
@@ -275,7 +277,7 @@ class _AboutCardState extends State<AboutCard> {
                 SizedBox(height: isProfileComplete ? 24 : 28),
                 isProfileComplete
                     ? Obx(() {
-                        final user = _useController.user.value?.data;
+                        final user = _userController.user.value?.data;
                         if (user == null) return SizedBox();
 
                         final birthdayString = user.birthday;

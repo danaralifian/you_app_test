@@ -30,6 +30,8 @@ class _InterestScreenState extends State<InterestScreen> {
         horoscope: _userController.user.value?.data.horoscope ?? '',
         zodiac: _userController.user.value?.data.zodiac ?? '',
         interests: _interests,
+        gender: _userController.user.value?.data.gender,
+        profileImage: _userController.user.value?.data.profileImage ?? '',
       ),
     );
   }
