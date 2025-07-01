@@ -12,6 +12,7 @@ class InputTextField extends StatefulWidget {
   final String? value;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final String? suffixText;
 
   const InputTextField({
     super.key,
@@ -24,6 +25,7 @@ class InputTextField extends StatefulWidget {
     this.enabled = true,
     this.onChanged,
     this.validator,
+    this.suffixText,
     required this.controller,
   });
 
@@ -46,6 +48,8 @@ class _CustomTextFormFieldState extends State<InputTextField> {
       validator: widget.validator,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
+        suffixText: widget.suffixText,
+        suffixStyle: TextStyle(color: Colors.white),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 14,

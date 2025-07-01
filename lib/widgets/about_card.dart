@@ -234,6 +234,8 @@ class _AboutCardState extends State<AboutCard> {
                   child: InputTextField(
                     controller: _heightController,
                     textAlign: TextAlign.right,
+                    hintText: 'Add height',
+                    suffixText: 'cm',
                   ),
                 ),
                 buildInput(
@@ -241,6 +243,8 @@ class _AboutCardState extends State<AboutCard> {
                   child: InputTextField(
                     controller: _weightController,
                     textAlign: TextAlign.right,
+                    hintText: 'Add weight',
+                    suffixText: 'kg',
                   ),
                 ),
               ],
