@@ -36,18 +36,26 @@ class _AboutCardState extends State<AboutCard> {
   void initState() {
     super.initState();
     _birthdayController.addListener(_setHoroscopeAndZodiac);
-    ever(_useController.user, (user) {
-      final data = user?.data;
-      if (data != null) {
-        _nameController.text = data.name ?? '';
-        _birthdayController.text = data.birthday ?? '';
-        _horoscopeController.text = data.horoscope ?? '';
-        _zodiacController.text = data.zodiac ?? '';
-        selectedGender = data.gender;
-        _heightController.text = data.height?.toString() ?? '';
-        _weightController.text = data.weight?.toString() ?? '';
-      }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final data = _useController.user.value?.data;
+      if (data != null) _fillForm(data);
+
+      ever(_useController.user, (user) {
+        final data = user?.data;
+        if (data != null) _fillForm(data);
+      });
     });
+  }
+
+  void _fillForm(UserModel data) {
+    _nameController.text = data.name ?? '';
+    _birthdayController.text = data.birthday ?? '';
+    _horoscopeController.text = data.horoscope ?? '';
+    _zodiacController.text = data.zodiac ?? '';
+    selectedGender = data.gender;
+    _heightController.text = data.height?.toString() ?? '';
+    _weightController.text = data.weight?.toString() ?? '';
   }
 
   void _setHoroscopeAndZodiac() {
@@ -78,7 +86,6 @@ class _AboutCardState extends State<AboutCard> {
   }
 
   void _saveAndUpdate() {
-    setState(() => isEditing = false);
     _useController.updateProfile(
       UserModel(
         email: _useController.user.value!.data.email,
@@ -93,6 +100,8 @@ class _AboutCardState extends State<AboutCard> {
         zodiac: _zodiacController.text,
       ),
     );
+
+    setState(() => isEditing = false);
   }
 
   @override

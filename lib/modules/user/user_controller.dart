@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/models/user_response.dart';
 import 'package:you_app/modules/user/user_service.dart';
-import 'package:you_app/routes/app_pages.dart';
 
 class UserController extends GetxController {
   // instance of user service
@@ -39,7 +38,6 @@ class UserController extends GetxController {
       user.value = await _userService.createProfile(userRequest);
 
       Get.snackbar('Success', 'Saved successfully');
-      Get.toNamed(Routes.profile);
     } catch (e) {
       error.value = 'Save failed: $e';
       Get.snackbar('Error', error.value);
@@ -52,10 +50,11 @@ class UserController extends GetxController {
     try {
       isLoading.value = true;
 
-      user.value = await _userService.updateProfile(userRequest);
+      final response = await _userService.updateProfile(userRequest);
+
+      user.value = UserResponse(message: response.message, data: userRequest);
 
       Get.snackbar('Success', 'Saved successfully');
-      Get.toNamed(Routes.profile);
     } catch (e) {
       error.value = 'Update failed: $e';
       Get.snackbar('Error', error.value);

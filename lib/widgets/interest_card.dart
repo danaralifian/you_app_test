@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:you_app/modules/user/user_controller.dart';
-import 'package:you_app/screens/interest_screen.dart';
+import 'package:you_app/routes/app_pages.dart';
 import 'package:you_app/theme/colors.dart';
+import 'package:you_app/utils/logger.dart';
 import 'package:you_app/widgets/interest_tags.dart';
 
 class InterestCard extends StatelessWidget {
@@ -15,6 +16,8 @@ class InterestCard extends StatelessWidget {
     return Obx(() {
       final interests = _userController.user.value?.data.interests ?? [];
       final isUserInterestEmpty = interests.isEmpty;
+
+      log.i('isUserInterestEmpty: $interests');
 
       return Container(
         width: double.infinity,
@@ -41,12 +44,7 @@ class InterestCard extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.edit, color: Colors.white, size: 20),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const InterestScreen(),
-                      ),
-                    );
+                    Get.toNamed(Routes.interestForm);
                   },
                 ),
               ],

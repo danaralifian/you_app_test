@@ -24,68 +24,74 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Back button
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.arrow_back_ios, color: Colors.white, size: 16),
-                      SizedBox(width: 4),
-                      Text('Back', style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
+    return Obx(() {
+      if (_userController.isLoading.value) {
+        return const Scaffold(
+          backgroundColor: AppColors.background,
+          body: Center(child: CircularProgressIndicator()),
+        );
+      }
 
-                // Center username
-                Obx(() {
-                  final username = _userController.user.value?.data.username;
-                  return Text(
-                    '@${username ?? ''}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        SizedBox(width: 4),
+                        Text('Back', style: TextStyle(color: Colors.white)),
+                      ],
                     ),
-                  );
-                }),
-
-                // More icon
-                IconButton(
-                  icon: const Icon(Icons.more_horiz, color: Colors.white),
-                  onPressed: () {
-                    // Open menu
-                  },
-                ),
+                  ),
+                  Obx(() {
+                    final username = _userController.user.value?.data.username;
+                    return Text(
+                      '@${username ?? ''}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  }),
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                ProfilePictureCard(),
+                SizedBox(height: 16),
+                AboutCard(),
+                SizedBox(height: 16),
+                InterestCard(),
+                SizedBox(height: 24),
               ],
             ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              ProfilePictureCard(),
-              SizedBox(height: 16),
-              AboutCard(),
-              SizedBox(height: 16),
-              InterestCard(),
-              SizedBox(height: 24),
-            ],
-          ),
-        ),
-      ),
-    );
+      );
+    });
   }
 }
