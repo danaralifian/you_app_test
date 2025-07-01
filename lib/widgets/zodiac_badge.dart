@@ -16,7 +16,7 @@ class ZodiacBadge extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(255, 255, 255, 0.06),
+            color: const Color.fromRGBO(0, 0, 0, 0.6),
             borderRadius: BorderRadius.circular(24),
           ),
           child: Row(

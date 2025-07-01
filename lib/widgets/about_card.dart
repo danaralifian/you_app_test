@@ -31,6 +31,7 @@ class _AboutCardState extends State<AboutCard> {
   final TextEditingController _birthdayController = TextEditingController();
   String? selectedGender;
   final _userController = Get.find<UserController>();
+  String? profileImage;
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class _AboutCardState extends State<AboutCard> {
     selectedGender = data.gender;
     _heightController.text = data.height?.toString() ?? '';
     _weightController.text = data.weight?.toString() ?? '';
+    profileImage = data.profileImage;
   }
 
   void _setHoroscopeAndZodiac() {
@@ -98,7 +100,7 @@ class _AboutCardState extends State<AboutCard> {
         weight: int.tryParse(_weightController.text),
         horoscope: _horoscopeController.text,
         zodiac: _zodiacController.text,
-        profileImage: _userController.user.value?.data.profileImage ?? '',
+        profileImage: profileImage,
       ),
     );
 
@@ -167,7 +169,11 @@ class _AboutCardState extends State<AboutCard> {
                 ),
                 const SizedBox(height: 16),
                 // Avatar
-                AddImageProfile(),
+                AddImageProfile(
+                  onChange: (value) {
+                    setState(() => profileImage = value);
+                  },
+                ),
                 const SizedBox(height: 24),
 
                 // Form fields
@@ -197,7 +203,7 @@ class _AboutCardState extends State<AboutCard> {
                         child: Text('Female'),
                       ),
                     ],
-                    onChanged: (value) {
+                    onChange: (value) {
                       setState(() => selectedGender = value);
                     },
                   ),

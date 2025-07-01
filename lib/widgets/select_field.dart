@@ -4,14 +4,14 @@ import 'package:you_app/theme/colors.dart';
 class SelectField extends StatefulWidget {
   final String? hintText;
   final String? value;
-  final void Function(String?)? onChanged;
+  final void Function(String?)? onChange;
   final List<DropdownMenuItem<String>>? items;
   final bool borderless;
   final Alignment alignment;
 
   const SelectField({
     this.value,
-    this.onChanged,
+    this.onChange,
     this.items,
     this.hintText,
     this.borderless = false,
@@ -48,7 +48,7 @@ class _SelectFieldState extends State<SelectField> {
             style: TextStyle(color: Colors.grey),
           ),
           items: widget.items,
-          onChanged: widget.onChanged,
+          onChanged: widget.onChange,
           style: const TextStyle(color: Colors.white),
           elevation: 5,
           dropdownColor: AppColors.cardInfoDark,

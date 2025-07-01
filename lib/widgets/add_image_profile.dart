@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:you_app/utils/logger.dart';
 
 class AddImageProfile extends StatefulWidget {
-  const AddImageProfile({super.key});
+  final void Function(String?)? onChange;
+  const AddImageProfile({super.key, this.onChange});
 
   @override
   State<AddImageProfile> createState() => _AddImageProfileState();
@@ -20,6 +22,8 @@ class _AddImageProfileState extends State<AddImageProfile> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
+        widget.onChange?.call(_imageFile!.path);
+        log.i('Image path: ${_imageFile!.path}');
       });
     }
   }

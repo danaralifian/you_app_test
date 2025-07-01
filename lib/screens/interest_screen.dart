@@ -64,11 +64,6 @@ class _InterestScreenState extends State<InterestScreen> {
                   height: 46,
                   child: TextButton(
                     onPressed: _save,
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 0),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
                     child: const Text(
                       'Save',
                       style: TextStyle(color: Colors.white),
