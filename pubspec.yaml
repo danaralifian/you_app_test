@@ -46,7 +46,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  mockito: ^5.4.2
+  mocktail: ^1.0.4
   build_runner: ^2.4.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
