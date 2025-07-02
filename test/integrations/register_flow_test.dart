@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:mocktail/mocktail.dart';
 
-import 'package:you_app/widgets/login_form.dart';
+import 'package:you_app/widgets/register_form.dart';
 import 'package:you_app/modules/auth/auth_controller.dart';
 import 'package:you_app/routes/app_pages.dart';
 
@@ -34,19 +34,20 @@ void main() {
   });
 
   testWidgets(
-    'LoginFormWidget performs login and navigates on success',
+    'RegisterFormWidget performs register and navigates on success',
     (tester) async {
       debugPrint(
-        'Running test: LoginFormWidget performs login and navigates on success',
+        'Running test: RegisterFormWidget performs register and navigates on success',
       );
+
       await tester.runAsync(() async {
         final navigatorObserver = _TestNavigatorObserver();
 
         when(() => mockDio.post(any(), data: any(named: 'data'))).thenAnswer(
           (_) async => dio.Response(
-            requestOptions: dio.RequestOptions(path: '/login'),
+            requestOptions: dio.RequestOptions(path: '/register'),
             statusCode: 200,
-            data: {'message': 'Login successful', 'access_token': 'mock-token'},
+            data: {'access_token': 'mock-token'},
           ),
         );
 
@@ -57,7 +58,7 @@ void main() {
             getPages: [
               GetPage(
                 name: '/',
-                page: () => Scaffold(body: LoginFormWidget()),
+                page: () => const Scaffold(body: RegisterFormWidget()),
               ),
               GetPage(
                 name: Routes.profile,
@@ -67,18 +68,21 @@ void main() {
           ),
         );
 
-        final emailField = find.byType(TextFormField).first;
-        final passwordField = find.byType(TextFormField).last;
-        final loginButton = find.widgetWithText(ElevatedButton, 'Login');
-
-        await tester.enterText(emailField, 'test@example.com');
-        await tester.enterText(passwordField, 'password123');
         await tester.pumpAndSettle();
 
-        await tester.tap(loginButton);
-        await tester.pump();
+        await tester.enterText(
+          find.byType(TextFormField).at(0),
+          'test@example.com',
+        );
+        await tester.enterText(find.byType(TextFormField).at(1), 'tester');
+        await tester.enterText(find.byType(TextFormField).at(2), 'password123');
+        await tester.enterText(find.byType(TextFormField).at(3), 'password123');
+        await tester.pumpAndSettle();
 
-        await tester.pump(const Duration(seconds: 3));
+        final registerButton = find.widgetWithText(ElevatedButton, 'Register');
+        await tester.tap(registerButton);
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pump(const Duration(seconds: 2));
         await tester.pumpAndSettle();
 
         debugPrint('Navigated to route: ${navigatorObserver.navigatedTo}');
@@ -86,13 +90,13 @@ void main() {
         expect(
           navigatorObserver.navigatedTo,
           Routes.profile,
-          reason: 'Should navigate to profile after login success',
+          reason: 'Should navigate to profile after register success',
         );
 
         expect(find.text('Success'), findsOneWidget);
-        expect(find.text('Logged in successfully'), findsOneWidget);
+        expect(find.text('Registered successfully'), findsOneWidget);
 
-        verify(() => mockDio.post(any(), data: any(named: 'data'))).called(1);
+        verify(() => mockDio.post(any(), data: any(named: 'data'))).called(2);
       });
     },
     timeout: const Timeout(Duration(seconds: 10)),
