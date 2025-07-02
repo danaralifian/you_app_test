@@ -5,7 +5,8 @@ import 'package:you_app/utils/logger.dart';
 
 class AddImageProfile extends StatefulWidget {
   final void Function(String?)? onChange;
-  const AddImageProfile({super.key, this.onChange});
+  final String? profileImage;
+  const AddImageProfile({super.key, this.onChange, this.profileImage});
 
   @override
   State<AddImageProfile> createState() => _AddImageProfileState();
@@ -14,6 +15,14 @@ class AddImageProfile extends StatefulWidget {
 class _AddImageProfileState extends State<AddImageProfile> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.profileImage != null) {
+      _imageFile = File(widget.profileImage!);
+    }
+  }
 
   Future<void> _pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(

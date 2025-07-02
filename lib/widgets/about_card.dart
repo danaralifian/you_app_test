@@ -174,6 +174,7 @@ class _AboutCardState extends State<AboutCard> {
                 const SizedBox(height: 16),
                 // Avatar
                 AddImageProfile(
+                  profileImage: profileImage,
                   onChange: (value) {
                     setState(() => profileImage = value);
                   },
