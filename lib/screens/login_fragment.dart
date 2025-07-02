@@ -1,13 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:you_app/modules/auth/auth_controller.dart';
-import 'package:you_app/modules/auth/models/auth_request.dart';
-import 'package:you_app/widgets/button.dart';
 import 'package:you_app/widgets/gold_text.dart';
-import 'package:you_app/widgets/input_text_field.dart';
-import 'package:form_validator/form_validator.dart';
-import 'package:get/get.dart';
-import 'package:you_app/utils/validators.dart';
+import 'package:you_app/widgets/login_form.dart';
 
 class LoginFragment extends StatefulWidget {
   final VoidCallback onSwitch;
@@ -18,50 +12,6 @@ class LoginFragment extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginFragment> {
-  final _emailOrUsernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  final _authController = Get.find<AuthController>();
-
-  bool _isFormFilled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _emailOrUsernameController.addListener(_updateFormFilled);
-    _passwordController.addListener(_updateFormFilled);
-  }
-
-  void _updateFormFilled() {
-    setState(() {
-      _isFormFilled =
-          _emailOrUsernameController.text.isNotEmpty &&
-          _passwordController.text.isNotEmpty;
-    });
-  }
-
-  @override
-  void dispose() {
-    _emailOrUsernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _login() {
-    if (_form.currentState?.validate() ?? false) {
-      final isEmail = isValidEmail(_emailOrUsernameController.text);
-      _authController.login(
-        AuthRequest(
-          email: isEmail ? _emailOrUsernameController.text : "",
-          username: isEmail ? "" : _emailOrUsernameController.text,
-          password: _passwordController.text,
-        ),
-      );
-    } else {
-      debugPrint("invalid form");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,115 +32,76 @@ class _LoginScreenState extends State<LoginFragment> {
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
             ),
-            child: Form(
-              key: _form,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SafeArea(child: SizedBox(height: 12)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.arrow_back_ios,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SafeArea(child: SizedBox(height: 12)),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          'Back',
+                          style: TextStyle(
                             color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'Back',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                  Padding(
-                    padding: EdgeInsetsGeometry.symmetric(horizontal: 18),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 23),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                        InputTextField(
-                          hintText: 'Enter Username/Email',
-                          controller: _emailOrUsernameController,
-                          borderless: true,
-                          validator: ValidationBuilder().minLength(3).build(),
-                          size: InputSize.large,
-                        ),
-                        const SizedBox(height: 16),
-                        InputTextField(
-                          hintText: 'Enter Password',
-                          isPassword: true,
-                          controller: _passwordController,
-                          borderless: true,
-                          validator: ValidationBuilder().minLength(6).build(),
-                          size: InputSize.large,
-                        ),
-                        const SizedBox(height: 40),
-                        Obx(
-                          () => Button(
-                            text: 'Login',
-                            onPressed: _isFormFilled ? _login : null,
-                            isLoading: _authController.isLoading.value,
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 13,
-                              ),
-                              children: [
-                                const TextSpan(text: 'No account? '),
-                                WidgetSpan(
-                                  child: GoldText(
-                                    child: RichText(
-                                      text: TextSpan(
-                                        text: 'Register here',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          decoration: TextDecoration.underline,
-                                          fontSize: 13,
-                                        ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            widget.onSwitch();
-                                          },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 60),
+                Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 18),
+                  child: Column(
+                    children: [
+                      LoginFormWidget(),
+                      const SizedBox(height: 30),
+                      Center(
+                        child: RichText(
+                          text: TextSpan(
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 13,
+                            ),
+                            children: [
+                              const TextSpan(text: 'No account? '),
+                              WidgetSpan(
+                                child: GoldText(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: 'Register here',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        decoration: TextDecoration.underline,
+                                        fontSize: 13,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          widget.onSwitch();
+                                        },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
