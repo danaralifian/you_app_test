@@ -3,7 +3,6 @@ import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:you_app/modules/auth/auth_controller.dart';
 import 'package:you_app/modules/auth/models/auth_request.dart';
-import 'package:you_app/utils/logger.dart';
 import 'package:you_app/utils/validators.dart';
 import 'package:you_app/widgets/button.dart';
 import 'package:you_app/widgets/input_text_field.dart';
@@ -48,7 +47,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   void _login() {
     if (_form.currentState?.validate() ?? false) {
       final isEmail = isValidEmail(_emailOrUsernameController.text);
-      log.i('Email or username: ${_emailOrUsernameController.text}');
       _authController.login(
         AuthRequest(
           email: isEmail ? _emailOrUsernameController.text : "",

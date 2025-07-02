@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:you_app/modules/user/user_controller.dart';
 import 'package:you_app/routes/app_pages.dart';
 import 'package:you_app/theme/colors.dart';
-import 'package:you_app/utils/logger.dart';
 import 'package:you_app/widgets/interest_tags.dart';
 
 class InterestCard extends StatelessWidget {
@@ -16,8 +15,6 @@ class InterestCard extends StatelessWidget {
     return Obx(() {
       final interests = _userController.user.value?.data.interests ?? [];
       final isUserInterestEmpty = interests.isEmpty;
-
-      log.i('isUserInterestEmpty: $interests');
 
       return Container(
         width: double.infinity,

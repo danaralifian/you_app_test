@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:you_app/modules/user/models/user.dart';
 import 'package:you_app/modules/user/models/user_response.dart';
 import 'package:you_app/modules/user/user_service.dart';
-import 'package:you_app/utils/logger.dart';
 
 class UserController extends GetxController {
   // instance of user service
@@ -52,8 +51,6 @@ class UserController extends GetxController {
       isLoading.value = true;
 
       final response = await _userService.updateProfile(userRequest);
-
-      log.i('response: ${userRequest.toJson()}');
 
       user.value = UserResponse(message: response.message, data: userRequest);
 
