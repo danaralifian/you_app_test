@@ -40,10 +40,13 @@ class _AboutCardState extends State<AboutCard> {
     _birthdayController.addListener(_setHoroscopeAndZodiac);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
       final data = _userController.user.value?.data;
       if (data != null) _fillForm(data);
 
       ever(_userController.user, (user) {
+        if (!mounted) return;
         final data = user?.data;
         if (data != null) _fillForm(data);
       });
