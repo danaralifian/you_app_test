@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InterestInput extends StatefulWidget {
   final void Function(List<String> value) onChange;
   final List<String>? value;
+
   const InterestInput({
     super.key,
     required this.onChange,
@@ -21,7 +22,6 @@ class _InterestInputState extends State<InterestInput> {
   @override
   void initState() {
     super.initState();
-    // Inisialisasi dengan widget.value, fallback ke list kosong jika null
     _interests = List.from(widget.value ?? []);
   }
 
@@ -62,8 +62,8 @@ class _InterestInputState extends State<InterestInput> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 8.0,
+            runSpacing: 8.0,
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
@@ -97,36 +97,44 @@ class _InterestInputState extends State<InterestInput> {
                   ),
                 ),
               ),
-              LayoutBuilder(
-                builder: (context, wrapConstraints) {
-                  // calculate available width
+              // Adaptive TextField
+              Builder(
+                builder: (context) {
+                  final textScale = MediaQuery.textScalerOf(context).scale(1.0);
                   double usedWidth = 0;
-                  const spacing = 8;
+                  const double spacing = 8.0;
 
                   for (var interest in _interests) {
-                    // estimate width of each interest
-                    usedWidth += (interest.length * 8 + 48) + spacing;
+                    final tagWidth =
+                        (interest.length * 8 * textScale) + 48 + spacing;
+                    usedWidth += tagWidth;
                   }
 
                   final double availableWidth =
-                      wrapConstraints.maxWidth - usedWidth;
-
+                      constraints.maxWidth - usedWidth;
                   final double inputWidth = availableWidth > 100
                       ? availableWidth
-                      : wrapConstraints.maxWidth;
+                      : constraints.maxWidth;
 
-                  return SizedBox(
-                    width: inputWidth,
-                    child: TextField(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                      onSubmitted: _addInterest,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.transparent,
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: 100,
+                      maxWidth: inputWidth,
+                    ),
+                    child: IntrinsicWidth(
+                      child: TextField(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        onSubmitted: _addInterest,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          hintText: 'Add interest',
+                          hintStyle: TextStyle(color: Colors.white54),
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: Colors.transparent,
+                        ),
                       ),
                     ),
                   );
