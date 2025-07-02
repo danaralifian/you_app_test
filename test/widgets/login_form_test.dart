@@ -40,6 +40,7 @@ void main() {
   });
 
   testWidgets('LoginFormWidget renders and works', (WidgetTester tester) async {
+    debugPrint('Running test: LoginFormWidget renders and works');
     await tester.pumpWidget(
       const GetMaterialApp(home: Scaffold(body: LoginFormWidget())),
     );
